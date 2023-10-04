@@ -2,7 +2,7 @@
 
 * This project aims to evaluate the resilience of detection frameworks deployed in connected autonomous vehicles under adverse weather conditions. The experiments involve fog simulation on the [OPV2V Dataset](https://mobility-lab.seas.ucla.edu/opv2v/).
 * The [OpenCOOD](https://github.com/DerrickXuNu/OpenCOOD) framework was utilised.
-* The [PointPillars](https://arxiv.org/abs/1812.05784) 3D detection backbone is utilised.
+* The [PointPillars](https://arxiv.org/abs/1812.05784) 3D detection backbone was utilised.
 * The fusion of feature maps from different vehicles was achieved using the [Spatial-wise Adaptive Feature Fusion](https://arxiv.org/abs/2208.00116) (S-AdaFusion) method.
 
 ## Installation
@@ -29,21 +29,19 @@ Before you run the following command, first make sure the validation_dir in conf
  
 |<img src="https://github.com/DimitraTsakmakopoulou/Perception-For-Connected-Autonomous-Vehicles-Under-Adverse-Weather-Conditions/blob/main/images/GroudTruthBoundingBoxes.png" width="600" height="200">| <img src="https://github.com/DimitraTsakmakopoulou/Perception-For-Connected-Autonomous-Vehicles-Under-Adverse-Weather-Conditions/blob/main/images/cav1_ego.png" width="600" height="200">|
 |:--:|:--:|
-| *Ground Truth Bounding Boxes of all the vehicles on the current scene* |*Ground trouth bounding boxes for all the vehicles withine the field of view of Cav1*|
+| *Ground Truth Bounding Boxes of all the vehicles on the current scene* |*Ground trouth bounding boxes for all the vehicles within the field of view of Cav1*|
 
 |<img src="https://github.com/DimitraTsakmakopoulou/Perception-For-Connected-Autonomous-Vehicles-Under-Adverse-Weather-Conditions/blob/main/images/cav2.png" width="600" height="200">| <img src="https://github.com/DimitraTsakmakopoulou/Perception-For-Connected-Autonomous-Vehicles-Under-Adverse-Weather-Conditions/blob/main/images/cav3.png" width="600" height="200">|
 |:--:|:--:|
-| *Ground trouth bounding boxes for all the vehicles withine the field of view of Cav2* |*Ground Trouth Bounding Boxes of all the vehicles that are inside the field of view of Cav3*|
+| *Ground trouth bounding boxes for all the vehicles within the field of view of Cav2* |*Ground Trouth Bounding Boxes of all the vehicles within the field of view of Cav3*|
 
-|<img src="https://github.com/DimitraTsakmakopoulou/Perception-For-Connected-Autonomous-Vehicles-Under-Adverse-Weather-Conditions/blob/main/images/NoFusion.png" width="600" height="200">| <img src="https://github.com/DimitraTsakmakopoulou/Perception-For-Connected-Autonomous-Vehicles-Under-Adverse-Weather-Conditions/blob/main/images/CooperativeDetection.png" width="600" height="200">|
+|<img src="https://github.com/DimitraTsakmakopoulou/Perception-For-Connected-Autonomous-Vehicles-Under-Adverse-Weather-Conditions/blob/main/images/NoFusion.png" width="600" height="200">| <img src="https://github.com/DimitraTsakmakopoulou/Perception-For-Connected-Autonomous-Vehicles-Under-Adverse-Weather-Conditions/blob/main/images/NotedDetectedVehicles.png" width="600" height="200">|
 |:--:|:--:|
 | *Results of detection without Cooperative Perception* |*Results of detection with Cooperative Perception*|
 
 #### Results on Adverse Weather Conditions
 * The experiments are conducted under two distinct conditions: clear weather conditions and fog simulation. 
 * The density of the fog is quantified in terms of driver visibility, measured in meters. 
-* To simulate fog within point cloud data, a probability model that assumes a uniform distribution of fog across the spatial domain. Initially, the points to be modified are selected. The likelihood of a point undergoing modification is determined by an exponential function, which is contingent upon the point's distance from the vehicle's sensor. This choice is driven by the fact that the attenuation of points due to fog exhibits exponential growth with increasing distance. The selected points can undergo two types of adjustments: they are either removed entirely or their position and intensity are altered.
-  
 
 | Visibility(m) |    AP@0.7     |  
 | ------------- |:-------------:|
@@ -57,7 +55,7 @@ Before you run the following command, first make sure the validation_dir in conf
 
 
  ##### Visualized Results
-Below we can observe the simulation of fog on the point cloud. The absence of points becomes noticeable as the driver's visibility decreases.
+Below we can observe the simulation of fog on the point cloud. The absence of points becomes noticeable as the driver's visibility decreases. The variation in point color indicates an increase in intensity attributed to humidity.
 
 |<img src="https://github.com/DimitraTsakmakopoulou/Perception-For-Connected-Autonomous-Vehicles-Under-Adverse-Weather-Conditions/blob/main/images/Original.png" width="600" height="200">
 |:--:|
