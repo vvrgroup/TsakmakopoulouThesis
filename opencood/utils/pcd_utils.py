@@ -34,6 +34,7 @@ def pcd_to_np(pcd_file):
     intensity = np.expand_dims(np.asarray(pcd.colors)[:, 0], -1)
     pcd_np = np.hstack((xyz, intensity))
 
+    """
     ###----------------add noise - FOG--------###
     #max_distance = 50
     #distances = np.linalg.norm(pcd_np[:, :3], axis=1)
@@ -41,8 +42,9 @@ def pcd_to_np(pcd_file):
     ##np.copyto(pcd_np[indices, :], 0.0)
     #pcd_np = np.delete(pcd_np, indices, axis=0)
     ###--------------------------------###
+    """
 
-    #"""
+    """
     ###--------------FOG---------------###
     modified_cloud = np.copy(pcd_np)
     xyz = modified_cloud[:, :3]
@@ -124,8 +126,88 @@ def pcd_to_np(pcd_file):
     modified_cloud = modified_cloud[~delete_mask]
 
     ###-------------------------------###
-    #"""
+    """
 
+
+    
+    #"""
+    ###--------------FOG-VeVsion2---------------###
+    modified_cloud = np.copy(pcd_np)
+    xyz = modified_cloud[:, :3]
+    r = modified_cloud[:, 3]
+
+    d = np.linalg.norm(xyz, axis=1)
+    v=140
+    epsilon=0.32*math.exp(0.0220*v)
+    a=-0.63
+    b=-0.020
+    p_delete = a * np.exp(b * v) + 1
+
+    random_values = np.random.random(len(pcd_np))
+
+    epsilon = 0.01 * math.exp(0.0010 * v)
+    p_modify = 1 - np.exp(-d * epsilon)
+    np.set_printoptions(threshold=np.inf)
+    modify_mask = p_modify > np.random.rand(len(p_modify))
+ 
+
+    ## Filter points for deletion
+    delete_mask = modify_mask & (random_values <= p_delete)
+
+    modify_count=np.sum(modify_mask)
+    delete_count = np.sum(delete_mask)
+    move_count = np.sum(modify_mask & ~delete_mask)
+    total_count = len(pcd_np)
+
+    modified_xyz = np.copy(xyz)
+    modified_r = np.copy(r)
+
+    l=-0.00846 * v + 2.29
+    beta=1/l
+    modified_d = np.random.exponential(beta, len(pcd_np))
+
+    # change the position of the points that were not deleted close rto the sensor
+    positive_x = modified_xyz[modify_mask & ~delete_mask, 0] > 0
+    modified_xyz[modify_mask & ~delete_mask, 0] -= np.where(positive_x, modified_d[modify_mask & ~delete_mask], 0)
+
+    negative_x = modified_xyz[modify_mask & ~delete_mask, 0] < 0
+    modified_xyz[modify_mask & ~delete_mask, 0] += np.where(negative_x, modified_d[modify_mask & ~delete_mask], 0)
+
+    positive_y = modified_xyz[modify_mask & ~delete_mask, 1] > 0
+    modified_xyz[modify_mask & ~delete_mask, 1] -= np.where(positive_y, modified_d[modify_mask & ~delete_mask], 0)
+
+    negative_y = modified_xyz[modify_mask & ~delete_mask, 1] < 0
+    modified_xyz[modify_mask & ~delete_mask, 1] += np.where(negative_y, modified_d[modify_mask & ~delete_mask], 0)
+
+    positive_z = modified_xyz[modify_mask & ~delete_mask, 2] > 0
+    modified_xyz[modify_mask & ~delete_mask, 2] -= np.where(positive_z, modified_d[modify_mask & ~delete_mask], 0)
+
+    negative_z = modified_xyz[modify_mask & ~delete_mask, 2] < 0
+    modified_xyz[modify_mask & ~delete_mask, 2] += np.where(negative_z, modified_d[modify_mask & ~delete_mask], 0)
+    
+
+    # Assign modified values to the coordinates
+    modified_cloud[modify_mask & ~delete_mask, :3] = modified_xyz[modify_mask & ~delete_mask]
+    #     
+    
+    intensity_max = np.max(r)
+    selected_points = modify_mask & ~delete_mask
+    modified_r[selected_points] *= np.random.rand(len(modified_r[selected_points])) * 0.32 * intensity_max
+    modified_cloud[selected_points, 3] = modified_r[selected_points]
+
+    gamma = -np.log(0.05) / v
+    modified_r[~modify_mask] = r[~modify_mask] * np.exp(-gamma * 2 * d[~modify_mask])
+    modified_cloud[~modify_mask, 3] = modified_r[~modify_mask]
+    modified_cloud[~selected_points, 3] = modified_r[~selected_points]
+    
+
+    # Delete points
+    modified_cloud = modified_cloud[~delete_mask]
+
+
+    ###-------------------------------###
+    #"""
+    
     """
     ###--------------RAIN------------------###
 

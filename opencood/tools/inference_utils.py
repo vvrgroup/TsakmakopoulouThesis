@@ -31,8 +31,15 @@ def inference_late_fusion(batch_data, model, dataset):
     """
     output_dict = OrderedDict()
 
+    iteration_count = 0
+
     for cav_id, cav_content in batch_data.items():
         output_dict[cav_id] = model(cav_content)
+        
+        
+        #iteration_count += 1
+        #if iteration_count == 2:
+            #break
 
     pred_box_tensor, pred_score, gt_box_tensor = \
         dataset.post_process(batch_data,

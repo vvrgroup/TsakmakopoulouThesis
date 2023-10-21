@@ -264,8 +264,13 @@ class VoxelPostprocessor(BasePostprocessor):
         # the final bounding box list
         pred_box3d_list = []
         pred_box2d_list = []
-
+        iteration_count = 0
         for cav_id, cav_content in data_dict.items():
+            
+
+            #iteration_count += 1
+            #if iteration_count == 2:
+                #break
             assert cav_id in output_dict
             # the transformation matrix to ego space
             transformation_matrix = cav_content['transformation_matrix']
