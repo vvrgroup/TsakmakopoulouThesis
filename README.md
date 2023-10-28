@@ -22,7 +22,7 @@ Before you run the following command, first make sure the validation_dir in conf
 #### Results on Clear Weather Conditions
 | AP@0.7  | AP@0.5  | AP@0.3  |
 | ------- |:-------:|:-------:|
-|  0.877  |  0.92   |  0.93   |
+|  0.88   |  0.92   |  0.93   |
 
  ##### Visualized Results
  The green boxes represent the ground truth bounding boxes, while the red ones represent the detected vehicles in the scene. The vehicles inside the orange square are the ones detected because of cooperative perception.
