@@ -70,7 +70,7 @@ A comparison between the same scenario in clear weather and under varying levels
 
 Examples of cooperative perception on the OPV2V dataset. The ground truth bounding boxes are shown in green, while the predicted bounding boxes are shown in red. The blue circles indicate vehicles that are occluded and would not be detected in single vehicle perception.
 
-|<img src="https://github.com/vvrgroup/TsakmakopoulouThesis/blob/main/images/og__.png" width="600" height="200">| <img src="https://github.com/vvrgroup/TsakmakopoulouThesis/blob/main/images/vis60.png.png" width="600" height="200">|
+|<img src="https://github.com/vvrgroup/TsakmakopoulouThesis/blob/main/images/og__.png" width="600" height="200">| <img src="https://github.com/vvrgroup/TsakmakopoulouThesis/blob/main/images/vis60.png" width="600" height="200">|
 |:--:|:--:|
 | *Original point cloud from the OPV2V dataset.* |*Detected vehicles in fog with V = 60m.*|
 
